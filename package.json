@@ -1,5 +1,5 @@
 {
-  "name": "browserstackassessment",
+  "name": "node-js-playwright-browserstack",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,29 +8,18 @@
     "sample-local-test": "npx browserstack-node-sdk playwright test --config=./playwright.local.config.js",
     "postinstall": "npm update browserstack-node-sdk"
   },
+  "dependencies": {
+    "axios": "latest",
+    "dotenv": "latest",
+    "path": "latest",
+    "request": "latest",
+    "requests": "latest"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.54.1",
-    "browserstack-node-sdk": "^1.39.0"
-  },
-  "dependencies": {
-    "axios": "^1.10.0",
-    "dotenv": "^17.2.0",
-    "path": "^0.12.7",
-    "request": "^2.88.2",
-    "requests": "^0.3.0"
-  },
-  "directories": {
-    "test": "tests"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dhana200/BrowserStackAssesment.git"
-  },
-  "bugs": {
-    "url": "https://github.com/dhana200/BrowserStackAssesment/issues"
-  },
-  "homepage": "https://github.com/dhana200/BrowserStackAssesment#readme"
+    "@playwright/test": "latest",
+    "browserstack-node-sdk": "latest"
+  }
 }

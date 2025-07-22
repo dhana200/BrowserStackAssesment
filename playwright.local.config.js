@@ -1,10 +1,10 @@
 // This is a sample config for what users might be running locally
 const config = {
   testDir: './tests',
-  testMatch: '**/*.js',
+  testMatch: '**/bstack_local*.js',
 
   /* Maximum time one test can run for. */
-  timeout: 10 * 60 * 1000,
+  timeout: 90 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
