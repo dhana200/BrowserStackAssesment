@@ -1,5 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 const RAPID_API_KEY = process.env.RAPID_API_KEY || 'a33f51f64fmsh70389831c99ae05p12017ajsn1d4b9ab8ec0a';
 
@@ -46,16 +48,25 @@ test('Translate Spanish to English using RapidAPI', async ({ page }) => {
     const title = await page.locator('h1').textContent();
     const paragraphs = await page.locator('article h2').first().textContent() || '';
 
-    // ✅ Only download images locally, skip on BrowserStack
+    // ✅ Download images locally (skip on BrowserStack)
     if (!isBrowserStack) {
       const imageUrl = await page.locator('article img').first().getAttribute('src');
       if (imageUrl && imageUrl.startsWith('http')) {
-        console.log(`Would save image: ${imageUrl}`);
         try {
+          console.log(`Downloading image: ${imageUrl}`);
+
+          // Fetch image as a buffer
           const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-          console.log(`Downloaded ${Math.round(response.data.byteLength / 1024)} KB`);
+
+          // Create a safe filename based on the article index
+          const fileExt = path.extname(new URL(imageUrl).pathname) || '.jpg';
+          const imgPath = path.resolve(`article-${i + 1}${fileExt}`);
+
+          // Save the image to disk
+          fs.writeFileSync(imgPath, response.data);
+          console.log(`✅ Saved ${imgPath} (${Math.round(response.data.byteLength / 1024)} KB)`);
         } catch (err) {
-          console.log(`Image download failed: ${err}`);
+          console.log(`❌ Image download failed: ${err.message}`);
         }
       }
     }
